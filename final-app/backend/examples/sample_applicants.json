@@ -1,0 +1,74 @@
+[
+  {
+    "RevolvingUtilizationOfUnsecuredLines": 0.010627174,
+    "age": 80.0,
+    "NumberOfTime30-59DaysPastDueNotWorse": 0.0,
+    "DebtRatio": 15.0,
+    "MonthlyIncome": 0.0,
+    "NumberOfOpenCreditLinesAndLoans": 3.0,
+    "NumberOfTimes90DaysLate": 0.0,
+    "NumberRealEstateLoansOrLines": 0.0,
+    "NumberOfTime60-89DaysPastDueNotWorse": 0.0,
+    "NumberOfDependents": 0.0
+  },
+  {
+    "RevolvingUtilizationOfUnsecuredLines": 1.101802757,
+    "age": 48.0,
+    "NumberOfTime30-59DaysPastDueNotWorse": 3.0,
+    "DebtRatio": 0.926512031,
+    "MonthlyIncome": 4612.0,
+    "NumberOfOpenCreditLinesAndLoans": 12.0,
+    "NumberOfTimes90DaysLate": 5.0,
+    "NumberRealEstateLoansOrLines": 5.0,
+    "NumberOfTime60-89DaysPastDueNotWorse": 2.0,
+    "NumberOfDependents": 3.0
+  },
+  {
+    "RevolvingUtilizationOfUnsecuredLines": 0.536575875,
+    "age": 35.0,
+    "NumberOfTime30-59DaysPastDueNotWorse": 1.0,
+    "DebtRatio": 0.692470557,
+    "MonthlyIncome": 7556.0,
+    "NumberOfOpenCreditLinesAndLoans": 16.0,
+    "NumberOfTimes90DaysLate": 0.0,
+    "NumberRealEstateLoansOrLines": 1.0,
+    "NumberOfTime60-89DaysPastDueNotWorse": 0.0,
+    "NumberOfDependents": 0.0
+  },
+  {
+    "RevolvingUtilizationOfUnsecuredLines": 0.693329681,
+    "age": 42.0,
+    "NumberOfTime30-59DaysPastDueNotWorse": 2.0,
+    "DebtRatio": 0.257731959,
+    "MonthlyIncome": 2230.0,
+    "NumberOfOpenCreditLinesAndLoans": 7.0,
+    "NumberOfTimes90DaysLate": 0.0,
+    "NumberRealEstateLoansOrLines": 0.0,
+    "NumberOfTime60-89DaysPastDueNotWorse": 0.0,
+    "NumberOfDependents": 0.0
+  },
+  {
+    "RevolvingUtilizationOfUnsecuredLines": 0.010627174,
+    "age": 80.0,
+    "NumberOfTime30-59DaysPastDueNotWorse": 0.0,
+    "DebtRatio": 15.0,
+    "MonthlyIncome": null,
+    "NumberOfOpenCreditLinesAndLoans": 3.0,
+    "NumberOfTimes90DaysLate": 0.0,
+    "NumberRealEstateLoansOrLines": 0.0,
+    "NumberOfTime60-89DaysPastDueNotWorse": 0.0,
+    "NumberOfDependents": null
+  },
+  {
+    "RevolvingUtilizationOfUnsecuredLines": 0.010627174,
+    "age": 80.0,
+    "NumberOfTime30-59DaysPastDueNotWorse": 0.0,
+    "DebtRatio": 15.0,
+    "MonthlyIncome": 0.0,
+    "NumberOfOpenCreditLinesAndLoans": 3.0,
+    "NumberOfTimes90DaysLate": 98,
+    "NumberRealEstateLoansOrLines": 0.0,
+    "NumberOfTime60-89DaysPastDueNotWorse": 0.0,
+    "NumberOfDependents": 0.0
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "audit_version": "1.0.0",
+  "primary_sha256": "74ca27dacf767ebc54fbb658a1012fb45572fe000fc3a3c6f4a4d53e6e9d1072",
+  "primary_threshold": 0.178669735789299,
+  "challenger_thresholds": {
+    "logistic": 0.12700869262532793,
+    "random_forest": 0.10137735367436417
+  },
+  "threshold_offsets": [
+    -0.02,
+    -0.01,
+    0,
+    0.01,
+    0.02
+  ],
+  "reference": {
+    "RevolvingUtilizationOfUnsecuredLines": {
+      "min": 0.0,
+      "max": 50708.0,
+      "q01": 0.0,
+      "q25": 0.03018566325,
+      "q75": 0.5614339825,
+      "q99": 1.098726422739999
+    },
+    "age": {
+      "min": 21.0,
+      "max": 109.0,
+      "q01": 24.0,
+      "q25": 41.0,
+      "q75": 63.0,
+      "q99": 87.0
+    },
+    "NumberOfTime30-59DaysPastDueNotWorse": {
+      "min": 0.0,
+      "max": 98.0,
+      "q01": 0.0,
+      "q25": 0.0,
+      "q75": 0.0,
+      "q99": 4.0
+    },
+    "DebtRatio": {
+      "min": 0.0,
+      "max": 329664.0,
+      "q01": 0.0,
+      "q25": 0.17648826175,
+      "q75": 0.8749830645,
+      "q99": 5007.669999999998
+    },
+    "MonthlyIncome": {
+      "min": 0.0,
+      "max": 3008750.0,
+      "q01": 0.0,
+      "q25": 3400.0,
+      "q75": 8250.0,
+      "q99": 25000.0
+    },
+    "NumberOfOpenCreditLinesAndLoans": {
+      "min": 0.0,
+      "max": 58.0,
+      "q01": 0.0,
+      "q25": 5.0,
+      "q75": 11.0,
+      "q99": 24.0
+    },
+    "NumberOfTimes90DaysLate": {
+      "min": 0.0,
+      "max": 98.0,
+      "q01": 0.0,
+      "q25": 0.0,
+      "q75": 0.0,
+      "q99": 3.0
+    },
+    "NumberRealEstateLoansOrLines": {
+      "min": 0.0,
+      "max": 54.0,
+      "q01": 0.0,
+      "q25": 0.0,
+      "q75": 2.0,
+      "q99": 5.0
+    },
+    "NumberOfTime60-89DaysPastDueNotWorse": {
+      "min": 0.0,
+      "max": 98.0,
+      "q01": 0.0,
+      "q25": 0.0,
+      "q75": 0.0,
+      "q99": 2.0
+    },
+    "NumberOfDependents": {
+      "min": 0.0,
+      "max": 10.0,
+      "q01": 0.0,
+      "q25": 0.0,
+      "q75": 1.0,
+      "q99": 4.0
+    }
+  },
+  "policy": "Any input quality flag, challenger decision disagreement, threshold flip or input probe flip -> REVIEW; never override primary.",
+  "policy_status": "Predeclared hackathon heuristics; not optimized for review capacity or business cost.",
+  "training_rows": 89634,
+  "calibration_rows": 14938,
+  "policy_rows": 14940,
+  "test_rows": 29879
+}

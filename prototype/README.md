@@ -1,109 +1,125 @@
-# VerdictLens working prototype
+# VerdictLens Streamlit Prototype
 
-This directory is reserved for the working local Streamlit prototype. Copy the contents of the current `VerdictLens with site` project into this folder while keeping this README as the technical guide.
+This folder contains the original working proof of concept. It validates the complete local flow with a simple Streamlit interface and preserves the deterministic Python package, frozen artifacts, tests, and verification evidence used before the final interface was built.
 
-## Prototype scope
-
-The prototype demonstrates the complete workflow:
+## What this version demonstrates
 
 ```text
-Applicant input
-    → Primary loan-risk prediction
-    → APPROVE or REJECT
-    → Deterministic VerdictLens audit
-    → Stable under current checks or Review required
-    → Optional Gemini explanation
+Applicant data
+  → primary_prediction(applicant)
+  → XGBoost risk estimate
+  → APPROVE or REJECT
+  → audit(applicant)
+  → model, threshold, input, and quality evidence
+  → NO_FLAGS_IN_CHECKS or REVIEW
+  → optional Gemini wording
 ```
 
-It is intentionally a functional validation interface. The final visual and interaction design belongs in [`../final-app/`](../final-app/).
-
-## Expected contents
-
-After copying the prototype, this directory should contain:
-
-```text
-prototype/
-├── app.py
-├── verdictlens/
-├── models/
-├── examples/
-├── tests/
-├── reports/
-├── requirements.txt
-├── model_support.py
-└── README.md
-```
-
-Keep `model_support.py`; the frozen model pipelines use it as a serialization compatibility import.
+The machine-learning workflow runs locally and deterministically. Gemini is optional in this prototype and is used only for explanation.
 
 ## Requirements
 
 - Python 3.11
-- A local terminal
-- Internet access for the initial dependency installation
-- An optional Gemini API key for generated explanations
+- A terminal or PowerShell window
+- Internet access during dependency installation
+- A Gemini API key only if you want generated explanations
 
-The primary decision and VerdictLens audit work without Gemini and without an internet connection after dependencies are installed.
+## Install it
 
-## Installation
+Open a terminal in `prototype/` and create an isolated Python environment:
 
-Open a terminal in this directory:
-
-```bash
+```powershell
 python -m venv .venv
 ```
 
-Activate the environment on Windows Command Prompt:
-
-```bat
-.venv\Scripts\activate
-```
-
-Or in PowerShell:
+Activate it on Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install the dependencies:
+For Windows Command Prompt:
 
-```bash
+```bat
+.venv\Scripts\activate
+```
+
+Install the pinned dependencies:
+
+```powershell
 python -m pip install -r requirements.txt
 ```
 
-## Start the local site
-
-```bash
-python -m streamlit run app.py
-```
-
-Open [http://localhost:8501](http://localhost:8501) if the browser does not open automatically. Keep the terminal running while using the site and press `Ctrl+C` to stop it.
-
-## Optional Gemini explanation
-
-Gemini runs only after the structured audit is complete. It explains the primary decision mechanics first, then explains the audit findings. It cannot change any model output or audit flag.
-
-The quickest prototype setup is to paste a key into the password field in the Streamlit sidebar. For regular local use, configure an environment variable before starting the application.
-
-Windows Command Prompt:
-
-```bat
-set GEMINI_API_KEY=your_key_here
-python -m streamlit run app.py
-```
-
-PowerShell:
+## Start the site
 
 ```powershell
-$env:GEMINI_API_KEY="your_key_here"
 python -m streamlit run app.py
 ```
 
-Never commit a real API key. The repository ignores `.env` and `.streamlit/secrets.toml`.
+Streamlit normally opens a browser automatically. Otherwise, visit [http://localhost:8501](http://localhost:8501). Keep the terminal running while using the site. Press `Ctrl+C` to stop it.
 
-## JSON test cases
+## Use the prototype
 
-The site accepts one applicant object or a list of applicant objects. Every object must contain exactly these ten fields:
+1. Enter all ten applicant fields or open the JSON importer.
+2. Optionally load the bundled example.
+3. Run the primary loan decision.
+4. Review the risk estimate, fixed threshold, margin, and `APPROVE` or `REJECT` result.
+5. Run VerdictLens.
+6. Inspect challenger decisions, threshold tests, input probes, quality findings, flags, and limitations.
+7. Optionally ask Gemini to explain the completed result.
+
+## Use the Python package directly
+
+The public API is intentionally small:
+
+```python
+from verdictlens import primary_prediction, audit, run
+
+applicant = {
+    "RevolvingUtilizationOfUnsecuredLines": 0.536575875,
+    "age": 35,
+    "NumberOfTime30-59DaysPastDueNotWorse": 1,
+    "DebtRatio": 0.692470557,
+    "MonthlyIncome": 7556.0,
+    "NumberOfOpenCreditLinesAndLoans": 16,
+    "NumberOfTimes90DaysLate": 0,
+    "NumberRealEstateLoansOrLines": 1,
+    "NumberOfTime60-89DaysPastDueNotWorse": 0,
+    "NumberOfDependents": 0,
+}
+
+primary = primary_prediction(applicant)
+result = audit(applicant)
+same_complete_flow = run(applicant)
+```
+
+All returned values are JSON serializable. `run(applicant)` and `audit(applicant)` execute the same full audit flow.
+
+## Run from JSON without the website
+
+Run the bundled examples:
+
+```powershell
+python -m verdictlens
+```
+
+Audit your own JSON file:
+
+```powershell
+python -m verdictlens --input examples\sample_applicants.json
+```
+
+Save the structured output:
+
+```powershell
+python -m verdictlens --input examples\sample_applicants.json --output reports\my_results.json
+```
+
+The input may be one applicant object or an array of applicant objects.
+
+## JSON schema
+
+Every applicant must contain the ten exact field names below:
 
 ```json
 {
@@ -120,40 +136,100 @@ The site accepts one applicant object or a list of applicant objects. Every obje
 }
 ```
 
-Use JSON `null` only when `MonthlyIncome` or `NumberOfDependents` is unavailable. Count fields and age must be whole numbers. All supplied numeric values must be finite and nonnegative.
+Validation rules:
 
-For multiple cases, place complete applicant objects inside a JSON array. Open **Import applicant JSON**, validate the data, then select a case to load into the form.
+- Field names are exact and case-sensitive.
+- Numeric values must be finite and nonnegative.
+- Age and count fields must be whole numbers.
+- `MonthlyIncome` and `NumberOfDependents` may be `null` when unavailable.
+- Missing or extra required structure is rejected before prediction.
+- Late-payment values `96` and `98` are accepted but flagged as ambiguous historical codes.
+
+## Models
+
+| Model | Purpose | Frozen threshold |
+|---|---|---:|
+| XGBoost | Primary serious-delinquency risk model | 17.8669736% |
+| Logistic regression | Challenger with a simpler additive model family | 12.7008693% |
+| Random forest | Challenger with a different nonlinear model family | 10.1377354% |
+
+The primary model alone controls the original decision. A risk below its threshold is `APPROVE`; a risk at or above it is `REJECT`. Challenger models supply comparison evidence and never replace the primary output.
+
+## Audit result
+
+VerdictLens returns:
+
+- `primary`: the preserved XGBoost score, threshold, decision, and signed margin.
+- `challengers`: both alternative model scores and decisions.
+- `threshold_sensitivity`: decisions at offsets of −2, −1, 0, +1, and +2 percentage points.
+- `input_sensitivity`: controlled local probes, new scores, deltas, and whether the decision flipped.
+- `input_quality`: structured findings for missing, ambiguous, or unusual values.
+- `flags`: the exact reasons a case needs review.
+- `status`: `NO_FLAGS_IN_CHECKS` or `REVIEW`.
+- `limitations`: boundaries that must travel with the result.
+- `explanation`: deterministic summary text.
+
+### Review flags
+
+| Flag | Meaning |
+|---|---|
+| `INPUT_QUALITY_REVIEW` | At least one input-quality finding exists |
+| `MODEL_POLICY_DISAGREEMENT` | A challenger disagrees using its own threshold |
+| `COMMON_THRESHOLD_DISAGREEMENT` | A challenger disagrees at the primary threshold |
+| `THRESHOLD_SENSITIVE` | A nearby configured threshold changes the decision |
+| `INPUT_SENSITIVE` | At least one controlled input probe changes the decision |
+
+Any flag sets the audit status to `REVIEW`. No flags sets it to `NO_FLAGS_IN_CHECKS`. The primary decision remains unchanged in both cases.
+
+## Optional Gemini explanation
+
+Paste a key into the Streamlit sidebar, or set it for the current terminal session.
+
+PowerShell:
+
+```powershell
+$env:GEMINI_API_KEY="your_key_here"
+python -m streamlit run app.py
+```
+
+Command Prompt:
+
+```bat
+set GEMINI_API_KEY=your_key_here
+python -m streamlit run app.py
+```
+
+The default model is `gemini-3.1-flash-lite`, with configured Flash fallbacks for temporary capacity errors. Never place a real key in `.env.example` or commit it to Git.
 
 ## Run the tests
 
-```bash
+From this `prototype/` directory:
+
+```powershell
 python -m unittest discover -s tests -v
 ```
 
-The test suite covers the preserved model results, validation, determinism, offline core execution, artifact integrity, the Streamlit workflow, JSON imports, Gemini prompt boundaries, and temporary-capacity fallback behavior.
+If Python reports that `tests` is not importable, confirm that the prompt ends in `\prototype>` before running the command.
 
-## Decision and audit outputs
+The suite covers original saved behavior, deterministic results, strict validation, JSON import, offline core execution, artifact integrity, Streamlit integration, and Gemini prompt boundaries. The preserved verification summary is in [`reports/VERIFICATION.md`](reports/VERIFICATION.md).
 
-The primary XGBoost model produces a serious-delinquency risk estimate and one binary decision:
+## Folder guide
 
-- `APPROVE` when estimated risk is below the frozen threshold.
-- `REJECT` when estimated risk is at or above the frozen threshold.
+```text
+prototype/
+├── app.py                    Streamlit interface
+├── verdictlens/              Prediction and audit package
+├── models/                   Frozen artifacts, manifest, and policy configuration
+├── examples/                 Ready-to-run applicant JSON
+├── tests/                    Automated regression and behavior tests
+├── reports/                  Verification report and sample results
+├── provenance/               Original audit archive and report
+├── model_support.py          Compatibility class required by serialized pipelines
+└── requirements.txt          Pinned Python dependencies
+```
 
-VerdictLens then produces:
-
-- `NO_FLAGS_IN_CHECKS`, displayed as **Stable under current checks**.
-- `REVIEW`, displayed as **Review required**.
-
-A review result can include:
-
-- `INPUT_QUALITY_REVIEW`
-- `MODEL_POLICY_DISAGREEMENT`
-- `COMMON_THRESHOLD_DISAGREEMENT`
-- `THRESHOLD_SENSITIVE`
-- `INPUT_SENSITIVE`
-
-The audit status does not replace or reverse the primary decision.
+Do not remove `model_support.py`; the frozen joblib artifacts require it when loading.
 
 ## Boundaries
 
-This prototype is intended for technical demonstration and testing. It does not provide lending advice, causal explanations, fairness certification, legal compliance review, or production-ready risk assessment.
+This prototype does not provide lending advice, a causal explanation, a fairness certificate, legal compliance, or a production-ready risk assessment. Challenger agreement can still be wrong because models trained on related historical data may share the same blind spots.

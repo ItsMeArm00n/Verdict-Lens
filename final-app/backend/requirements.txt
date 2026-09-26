@@ -1,0 +1,21 @@
+# VerdictLens local API
+#
+# Install into the same interpreter that will run the site:
+#   python -m pip install -r requirements.txt
+#
+# The ML pins match the environment the frozen artifacts were verified in.
+# Changing them can shift the last floating-point digits of a risk estimate.
+
+numpy==2.4.6
+pandas==2.2.2
+scikit-learn==1.9.0
+xgboost==3.2.0
+joblib==1.4.2
+
+# Local HTTP API
+fastapi>=0.115
+uvicorn[standard]>=0.30
+
+# Optional Gemini wording layer. The site works without it and falls back to
+# the deterministic template explanation when this is absent.
+google-genai>=2.0
