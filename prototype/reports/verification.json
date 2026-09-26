@@ -1,0 +1,85 @@
+{
+  "python": "3.11.9",
+  "dependencies": {
+    "numpy": "2.4.6",
+    "pandas": "2.2.2",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.2.0",
+    "joblib": "1.4.2",
+    "streamlit": "1.51.0"
+  },
+  "test_command": "python -m unittest discover -s tests -v",
+  "tests_run": 14,
+  "tests_passed": 14,
+  "test_runtime_seconds": 14.391,
+  "sample_count": 6,
+  "original_primary_bundle_hash_matches": true,
+  "primary_sha256": "74ca27dacf767ebc54fbb658a1012fb45572fe000fc3a3c6f4a4d53e6e9d1072",
+  "samples": [
+    {
+      "sample": "low_risk",
+      "decision": "APPROVE",
+      "risk_estimate": 0.0022575012408196926,
+      "status": "NO_FLAGS_IN_CHECKS",
+      "flags": [],
+      "exact_match_to_original_saved_result": true
+    },
+    {
+      "sample": "high_risk",
+      "decision": "REJECT",
+      "risk_estimate": 0.9268031120300293,
+      "status": "REVIEW",
+      "flags": [
+        "INPUT_QUALITY_REVIEW"
+      ],
+      "exact_match_to_original_saved_result": true
+    },
+    {
+      "sample": "nearest_threshold",
+      "decision": "REJECT",
+      "risk_estimate": 0.17868994176387787,
+      "status": "REVIEW",
+      "flags": [
+        "MODEL_POLICY_DISAGREEMENT",
+        "COMMON_THRESHOLD_DISAGREEMENT",
+        "THRESHOLD_SENSITIVE",
+        "INPUT_SENSITIVE"
+      ],
+      "exact_match_to_original_saved_result": true
+    },
+    {
+      "sample": "model_disagreement",
+      "decision": "APPROVE",
+      "risk_estimate": 0.17443831264972687,
+      "status": "REVIEW",
+      "flags": [
+        "MODEL_POLICY_DISAGREEMENT",
+        "THRESHOLD_SENSITIVE",
+        "INPUT_SENSITIVE"
+      ],
+      "exact_match_to_original_saved_result": true
+    },
+    {
+      "sample": "missing_inputs",
+      "decision": "APPROVE",
+      "risk_estimate": 0.00397102115675807,
+      "status": "REVIEW",
+      "flags": [
+        "INPUT_QUALITY_REVIEW"
+      ],
+      "exact_match_to_original_saved_result": true
+    },
+    {
+      "sample": "ambiguous_late_count",
+      "decision": "APPROVE",
+      "risk_estimate": 0.06463675200939178,
+      "status": "REVIEW",
+      "flags": [
+        "INPUT_QUALITY_REVIEW",
+        "MODEL_POLICY_DISAGREEMENT",
+        "COMMON_THRESHOLD_DISAGREEMENT"
+      ],
+      "exact_match_to_original_saved_result": true
+    }
+  ]
+}

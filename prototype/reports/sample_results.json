@@ -1,0 +1,924 @@
+[
+  {
+    "schema_version": "1.0",
+    "audit_version": "1.0.0",
+    "primary": {
+      "risk_estimate": 0.0022575012408196926,
+      "threshold": 0.178669735789299,
+      "decision": "APPROVE",
+      "signed_margin": -0.17641223454847932
+    },
+    "status": "NO_FLAGS_IN_CHECKS",
+    "flags": [],
+    "input_quality": [],
+    "challengers": [
+      {
+        "model": "logistic",
+        "risk_estimate": 0.02032473848068081,
+        "own_policy_threshold": 0.12700869262532793,
+        "own_policy_decision": "APPROVE",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": 0.018067237239861117
+      },
+      {
+        "model": "random_forest",
+        "risk_estimate": 0.027429504326141562,
+        "own_policy_threshold": 0.10137735367436417,
+        "own_policy_decision": "APPROVE",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": 0.02517200308532187
+      }
+    ],
+    "threshold_sensitivity": [
+      {
+        "threshold": 0.15866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.168669735789299,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.178669735789299,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.18866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.198669735789299,
+        "decision": "APPROVE"
+      }
+    ],
+    "input_sensitivity": [
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.0100958153
+        },
+        "risk_estimate": 0.0022575012408196926,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.0111585327
+        },
+        "risk_estimate": 0.0022575012408196926,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 14.25
+        },
+        "risk_estimate": 0.0022575012408196926,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 15.75
+        },
+        "risk_estimate": 0.0022575012408196926,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_-1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 79.0
+        },
+        "risk_estimate": 0.0022575012408196926,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 81.0
+        },
+        "risk_estimate": 0.0022575012408196926,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      }
+    ],
+    "limitations": [
+      "Review flags do not prove a wrong or unfair decision.",
+      "Sensitivity probes are local diagnostics, not causal advice or a fairness certification.",
+      "All models share historical data and may share errors; no automated decision override."
+    ],
+    "explanation": "The demo primary model returns APPROVE with estimated risk 0.2%, using a 17.9% threshold. No flags were found in the configured checks; this is not a guarantee of correctness."
+  },
+  {
+    "schema_version": "1.0",
+    "audit_version": "1.0.0",
+    "primary": {
+      "risk_estimate": 0.9268031120300293,
+      "threshold": 0.178669735789299,
+      "decision": "REJECT",
+      "signed_margin": 0.7481333762407303
+    },
+    "status": "REVIEW",
+    "flags": [
+      "INPUT_QUALITY_REVIEW"
+    ],
+    "input_quality": [
+      {
+        "code": "TRAINING_TAIL",
+        "feature": "RevolvingUtilizationOfUnsecuredLines"
+      },
+      {
+        "code": "TRAINING_TAIL",
+        "feature": "NumberOfTimes90DaysLate"
+      }
+    ],
+    "challengers": [
+      {
+        "model": "logistic",
+        "risk_estimate": 0.89069409516976,
+        "own_policy_threshold": 0.12700869262532793,
+        "own_policy_decision": "REJECT",
+        "at_primary_threshold_decision": "REJECT",
+        "signed_difference_from_primary": -0.03610901686026935
+      },
+      {
+        "model": "random_forest",
+        "risk_estimate": 0.9364387366470016,
+        "own_policy_threshold": 0.10137735367436417,
+        "own_policy_decision": "REJECT",
+        "at_primary_threshold_decision": "REJECT",
+        "signed_difference_from_primary": 0.009635624616972316
+      }
+    ],
+    "threshold_sensitivity": [
+      {
+        "threshold": 0.15866973578929902,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.168669735789299,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.178669735789299,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.18866973578929902,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.198669735789299,
+        "decision": "REJECT"
+      }
+    ],
+    "input_sensitivity": [
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 1.04671261915
+        },
+        "risk_estimate": 0.9258022308349609,
+        "risk_delta": -0.0010008811950683594,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 1.15689289485
+        },
+        "risk_estimate": 0.9268031120300293,
+        "risk_delta": 0.0,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 0.8801864294499999
+        },
+        "risk_estimate": 0.9163163900375366,
+        "risk_delta": -0.010486721992492676,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 0.9728376325500001
+        },
+        "risk_estimate": 0.9268031120300293,
+        "risk_delta": 0.0,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "income_x0.95_fixed_debt_payments",
+        "kind": "conditional_scenario",
+        "changes": {
+          "MonthlyIncome": 4381.4,
+          "DebtRatio": 0.9752758221052632
+        },
+        "risk_estimate": 0.9278078675270081,
+        "risk_delta": 0.0010047554969787598,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "income_x1.05_fixed_debt_payments",
+        "kind": "conditional_scenario",
+        "changes": {
+          "MonthlyIncome": 4842.6,
+          "DebtRatio": 0.8823924104761904
+        },
+        "risk_estimate": 0.9163163900375366,
+        "risk_delta": -0.010486721992492676,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_-1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 47.0
+        },
+        "risk_estimate": 0.9275000095367432,
+        "risk_delta": 0.0006968975067138672,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 49.0
+        },
+        "risk_estimate": 0.9268031120300293,
+        "risk_delta": 0.0,
+        "decision": "REJECT",
+        "decision_flipped": false
+      }
+    ],
+    "limitations": [
+      "Review flags do not prove a wrong or unfair decision.",
+      "Sensitivity probes are local diagnostics, not causal advice or a fairness certification.",
+      "All models share historical data and may share errors; no automated decision override."
+    ],
+    "explanation": "The demo primary model returns REJECT with estimated risk 92.7%, using a 17.9% threshold. Review signals: INPUT_QUALITY_REVIEW. These signals do not establish that the decision is incorrect."
+  },
+  {
+    "schema_version": "1.0",
+    "audit_version": "1.0.0",
+    "primary": {
+      "risk_estimate": 0.17868994176387787,
+      "threshold": 0.178669735789299,
+      "decision": "REJECT",
+      "signed_margin": 2.0205974578857422e-05
+    },
+    "status": "REVIEW",
+    "flags": [
+      "MODEL_POLICY_DISAGREEMENT",
+      "COMMON_THRESHOLD_DISAGREEMENT",
+      "THRESHOLD_SENSITIVE",
+      "INPUT_SENSITIVE"
+    ],
+    "input_quality": [],
+    "challengers": [
+      {
+        "model": "logistic",
+        "risk_estimate": 0.10622106640913281,
+        "own_policy_threshold": 0.12700869262532793,
+        "own_policy_decision": "APPROVE",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": -0.07246887535474505
+      },
+      {
+        "model": "random_forest",
+        "risk_estimate": 0.07577395734878048,
+        "own_policy_threshold": 0.10137735367436417,
+        "own_policy_decision": "APPROVE",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": -0.10291598441509739
+      }
+    ],
+    "threshold_sensitivity": [
+      {
+        "threshold": 0.15866973578929902,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.168669735789299,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.178669735789299,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.18866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.198669735789299,
+        "decision": "APPROVE"
+      }
+    ],
+    "input_sensitivity": [
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.50974708125
+        },
+        "risk_estimate": 0.17868994176387787,
+        "risk_delta": 0.0,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.5634046687500001
+        },
+        "risk_estimate": 0.17628341913223267,
+        "risk_delta": -0.0024065226316452026,
+        "decision": "APPROVE",
+        "decision_flipped": true
+      },
+      {
+        "scenario": "DebtRatio_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 0.65784702915
+        },
+        "risk_estimate": 0.16661196947097778,
+        "risk_delta": -0.012077972292900085,
+        "decision": "APPROVE",
+        "decision_flipped": true
+      },
+      {
+        "scenario": "DebtRatio_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 0.72709408485
+        },
+        "risk_estimate": 0.1801186352968216,
+        "risk_delta": 0.0014286935329437256,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "income_x0.95_fixed_debt_payments",
+        "kind": "conditional_scenario",
+        "changes": {
+          "MonthlyIncome": 7178.2,
+          "DebtRatio": 0.7289163757894738
+        },
+        "risk_estimate": 0.1801186352968216,
+        "risk_delta": 0.0014286935329437256,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "income_x1.05_fixed_debt_payments",
+        "kind": "conditional_scenario",
+        "changes": {
+          "MonthlyIncome": 7933.8,
+          "DebtRatio": 0.6594957685714286
+        },
+        "risk_estimate": 0.16370411217212677,
+        "risk_delta": -0.014985829591751099,
+        "decision": "APPROVE",
+        "decision_flipped": true
+      },
+      {
+        "scenario": "age_record_delta_-1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 34.0
+        },
+        "risk_estimate": 0.17868994176387787,
+        "risk_delta": 0.0,
+        "decision": "REJECT",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 36.0
+        },
+        "risk_estimate": 0.1726364940404892,
+        "risk_delta": -0.006053447723388672,
+        "decision": "APPROVE",
+        "decision_flipped": true
+      }
+    ],
+    "limitations": [
+      "Review flags do not prove a wrong or unfair decision.",
+      "Sensitivity probes are local diagnostics, not causal advice or a fairness certification.",
+      "All models share historical data and may share errors; no automated decision override."
+    ],
+    "explanation": "The demo primary model returns REJECT with estimated risk 17.9%, using a 17.9% threshold. Review signals: MODEL_POLICY_DISAGREEMENT, COMMON_THRESHOLD_DISAGREEMENT, THRESHOLD_SENSITIVE, INPUT_SENSITIVE. These signals do not establish that the decision is incorrect."
+  },
+  {
+    "schema_version": "1.0",
+    "audit_version": "1.0.0",
+    "primary": {
+      "risk_estimate": 0.17443831264972687,
+      "threshold": 0.178669735789299,
+      "decision": "APPROVE",
+      "signed_margin": -0.0042314231395721436
+    },
+    "status": "REVIEW",
+    "flags": [
+      "MODEL_POLICY_DISAGREEMENT",
+      "THRESHOLD_SENSITIVE",
+      "INPUT_SENSITIVE"
+    ],
+    "input_quality": [],
+    "challengers": [
+      {
+        "model": "logistic",
+        "risk_estimate": 0.13639162239885189,
+        "own_policy_threshold": 0.12700869262532793,
+        "own_policy_decision": "REJECT",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": -0.03804669025087498
+      },
+      {
+        "model": "random_forest",
+        "risk_estimate": 0.07285542216300721,
+        "own_policy_threshold": 0.10137735367436417,
+        "own_policy_decision": "APPROVE",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": -0.10158289048671966
+      }
+    ],
+    "threshold_sensitivity": [
+      {
+        "threshold": 0.15866973578929902,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.168669735789299,
+        "decision": "REJECT"
+      },
+      {
+        "threshold": 0.178669735789299,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.18866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.198669735789299,
+        "decision": "APPROVE"
+      }
+    ],
+    "input_sensitivity": [
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.65866319695
+        },
+        "risk_estimate": 0.17443831264972687,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.7279961650500001
+        },
+        "risk_estimate": 0.18794268369674683,
+        "risk_delta": 0.013504371047019958,
+        "decision": "REJECT",
+        "decision_flipped": true
+      },
+      {
+        "scenario": "DebtRatio_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 0.24484536105
+        },
+        "risk_estimate": 0.1765473484992981,
+        "risk_delta": 0.002109035849571228,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 0.27061855695000003
+        },
+        "risk_estimate": 0.17824608087539673,
+        "risk_delta": 0.003807768225669861,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "income_x0.95_fixed_debt_payments",
+        "kind": "conditional_scenario",
+        "changes": {
+          "MonthlyIncome": 2118.5,
+          "DebtRatio": 0.27129679894736847
+        },
+        "risk_estimate": 0.17824608087539673,
+        "risk_delta": 0.003807768225669861,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "income_x1.05_fixed_debt_payments",
+        "kind": "conditional_scenario",
+        "changes": {
+          "MonthlyIncome": 2341.5,
+          "DebtRatio": 0.24545900857142858
+        },
+        "risk_estimate": 0.17443831264972687,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_-1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 41.0
+        },
+        "risk_estimate": 0.17290525138378143,
+        "risk_delta": -0.0015330612659454346,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 43.0
+        },
+        "risk_estimate": 0.17220033705234528,
+        "risk_delta": -0.002237975597381592,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      }
+    ],
+    "limitations": [
+      "Review flags do not prove a wrong or unfair decision.",
+      "Sensitivity probes are local diagnostics, not causal advice or a fairness certification.",
+      "All models share historical data and may share errors; no automated decision override."
+    ],
+    "explanation": "The demo primary model returns APPROVE with estimated risk 17.4%, using a 17.9% threshold. Review signals: MODEL_POLICY_DISAGREEMENT, THRESHOLD_SENSITIVE, INPUT_SENSITIVE. These signals do not establish that the decision is incorrect."
+  },
+  {
+    "schema_version": "1.0",
+    "audit_version": "1.0.0",
+    "primary": {
+      "risk_estimate": 0.00397102115675807,
+      "threshold": 0.178669735789299,
+      "decision": "APPROVE",
+      "signed_margin": -0.17469871463254094
+    },
+    "status": "REVIEW",
+    "flags": [
+      "INPUT_QUALITY_REVIEW"
+    ],
+    "input_quality": [
+      {
+        "code": "IMPUTED_INPUT",
+        "feature": "MonthlyIncome"
+      },
+      {
+        "code": "IMPUTED_INPUT",
+        "feature": "NumberOfDependents"
+      }
+    ],
+    "challengers": [
+      {
+        "model": "logistic",
+        "risk_estimate": 0.01963558801890534,
+        "own_policy_threshold": 0.12700869262532793,
+        "own_policy_decision": "APPROVE",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": 0.01566456686214727
+      },
+      {
+        "model": "random_forest",
+        "risk_estimate": 0.027255972886631626,
+        "own_policy_threshold": 0.10137735367436417,
+        "own_policy_decision": "APPROVE",
+        "at_primary_threshold_decision": "APPROVE",
+        "signed_difference_from_primary": 0.023284951729873556
+      }
+    ],
+    "threshold_sensitivity": [
+      {
+        "threshold": 0.15866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.168669735789299,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.178669735789299,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.18866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.198669735789299,
+        "decision": "APPROVE"
+      }
+    ],
+    "input_sensitivity": [
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.0100958153
+        },
+        "risk_estimate": 0.00397102115675807,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.0111585327
+        },
+        "risk_estimate": 0.00397102115675807,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 14.25
+        },
+        "risk_estimate": 0.00397102115675807,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 15.75
+        },
+        "risk_estimate": 0.00397102115675807,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "MonthlyIncome_missing_to_q25",
+        "kind": "missing_value_sensitivity",
+        "changes": {
+          "MonthlyIncome": 3400.0
+        },
+        "risk_estimate": 0.004486333578824997,
+        "risk_delta": 0.000515312422066927,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "MonthlyIncome_missing_to_q75",
+        "kind": "missing_value_sensitivity",
+        "changes": {
+          "MonthlyIncome": 8250.0
+        },
+        "risk_estimate": 0.0045281522907316685,
+        "risk_delta": 0.0005571311339735985,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "NumberOfDependents_missing_to_q25",
+        "kind": "missing_value_sensitivity",
+        "changes": {
+          "NumberOfDependents": 0.0
+        },
+        "risk_estimate": 0.003973049111664295,
+        "risk_delta": 2.0279549062252045e-06,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "NumberOfDependents_missing_to_q75",
+        "kind": "missing_value_sensitivity",
+        "changes": {
+          "NumberOfDependents": 1.0
+        },
+        "risk_estimate": 0.003969978075474501,
+        "risk_delta": -1.043081283569336e-06,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_-1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 79.0
+        },
+        "risk_estimate": 0.00397102115675807,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 81.0
+        },
+        "risk_estimate": 0.00397102115675807,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      }
+    ],
+    "limitations": [
+      "Review flags do not prove a wrong or unfair decision.",
+      "Sensitivity probes are local diagnostics, not causal advice or a fairness certification.",
+      "All models share historical data and may share errors; no automated decision override."
+    ],
+    "explanation": "The demo primary model returns APPROVE with estimated risk 0.4%, using a 17.9% threshold. Review signals: INPUT_QUALITY_REVIEW. These signals do not establish that the decision is incorrect."
+  },
+  {
+    "schema_version": "1.0",
+    "audit_version": "1.0.0",
+    "primary": {
+      "risk_estimate": 0.06463675200939178,
+      "threshold": 0.178669735789299,
+      "decision": "APPROVE",
+      "signed_margin": -0.11403298377990723
+    },
+    "status": "REVIEW",
+    "flags": [
+      "INPUT_QUALITY_REVIEW",
+      "MODEL_POLICY_DISAGREEMENT",
+      "COMMON_THRESHOLD_DISAGREEMENT"
+    ],
+    "input_quality": [
+      {
+        "code": "TRAINING_TAIL",
+        "feature": "NumberOfTimes90DaysLate"
+      },
+      {
+        "code": "AMBIGUOUS_LATE_COUNT",
+        "feature": "NumberOfTimes90DaysLate"
+      }
+    ],
+    "challengers": [
+      {
+        "model": "logistic",
+        "risk_estimate": 0.9270165878341899,
+        "own_policy_threshold": 0.12700869262532793,
+        "own_policy_decision": "REJECT",
+        "at_primary_threshold_decision": "REJECT",
+        "signed_difference_from_primary": 0.8623798358247982
+      },
+      {
+        "model": "random_forest",
+        "risk_estimate": 0.4648781688590065,
+        "own_policy_threshold": 0.10137735367436417,
+        "own_policy_decision": "REJECT",
+        "at_primary_threshold_decision": "REJECT",
+        "signed_difference_from_primary": 0.40024141684961473
+      }
+    ],
+    "threshold_sensitivity": [
+      {
+        "threshold": 0.15866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.168669735789299,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.178669735789299,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.18866973578929902,
+        "decision": "APPROVE"
+      },
+      {
+        "threshold": 0.198669735789299,
+        "decision": "APPROVE"
+      }
+    ],
+    "input_sensitivity": [
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.0100958153
+        },
+        "risk_estimate": 0.06463675200939178,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "RevolvingUtilizationOfUnsecuredLines_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "RevolvingUtilizationOfUnsecuredLines": 0.0111585327
+        },
+        "risk_estimate": 0.06463675200939178,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x0.95",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 14.25
+        },
+        "risk_estimate": 0.06463675200939178,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "DebtRatio_x1.05",
+        "kind": "measurement_sensitivity",
+        "changes": {
+          "DebtRatio": 15.75
+        },
+        "risk_estimate": 0.06463675200939178,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_-1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 79.0
+        },
+        "risk_estimate": 0.06463675200939178,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      },
+      {
+        "scenario": "age_record_delta_1",
+        "kind": "record_sensitivity_not_actionable",
+        "changes": {
+          "age": 81.0
+        },
+        "risk_estimate": 0.06463675200939178,
+        "risk_delta": 0.0,
+        "decision": "APPROVE",
+        "decision_flipped": false
+      }
+    ],
+    "limitations": [
+      "Review flags do not prove a wrong or unfair decision.",
+      "Sensitivity probes are local diagnostics, not causal advice or a fairness certification.",
+      "All models share historical data and may share errors; no automated decision override."
+    ],
+    "explanation": "The demo primary model returns APPROVE with estimated risk 6.5%, using a 17.9% threshold. Review signals: INPUT_QUALITY_REVIEW, MODEL_POLICY_DISAGREEMENT, COMMON_THRESHOLD_DISAGREEMENT. These signals do not establish that the decision is incorrect."
+  }
+]
