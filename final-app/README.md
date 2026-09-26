@@ -176,6 +176,18 @@ Explains the project's purpose, known limitations, responsible-use boundaries, a
 
 Any quality finding, challenger disagreement, threshold flip, or input-probe flip produces `REVIEW`. Otherwise, the backend returns `NO_FLAGS_IN_CHECKS`, displayed as **Stable in configured checks**.
 
+### Training and performance summary
+
+All three frozen models use the same ten-feature, **149,391-row** cleaned dataset. The split contains 89,634 training rows, 14,938 challenger-calibration rows, 14,940 policy-selection rows, and 29,879 untouched test rows. No oversampling or class weighting was used.
+
+| Model | Key configuration | ROC AUC | Average precision | F1 |
+|---|---|---:|---:|---:|
+| XGBoost | 400 trees, depth 3, learning rate 0.04 | **0.8696** | **0.4152** | **0.4617** |
+| Logistic regression | Standardized `log1p` features, L2 with C=1, sigmoid calibration | 0.8389 | 0.3724 | 0.4346 |
+| Random forest | 180 trees, depth 16, leaf size 25, sigmoid calibration | 0.8659 | 0.4135 | 0.4499 |
+
+The positive class is approximately 6.70% of the test set, so accuracy is not used as the headline metric. Full preprocessing, thresholds, Brier scores, precision, recall, split controls, and caveats are documented in the [prototype model section](../prototype/README.md#training-data-and-splits) and [original audit report](../prototype/provenance/ORIGINAL_AUDIT_REPORT.md).
+
 ## Applicant JSON format
 
 Paste one object or a list of complete objects:

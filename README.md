@@ -70,6 +70,39 @@ The frozen thresholds are:
 
 For each model, a risk estimate below its threshold produces `APPROVE`; a value at or above it produces `REJECT`.
 
+## Dataset, training, and evaluation
+
+The preserved training archive contains `cleaned_labeled_data.csv` with **149,391 labeled applicant rows** after **609 duplicate IDs** were excluded. The binary target is serious delinquency within the model's prediction period. Missing values were retained until pipeline preprocessing, and the natural class balance was preserved: there was no oversampling or class weighting. The positive-class prevalence in the untouched test set is approximately **6.70%**.
+
+| Split | Rows | Use |
+|---|---:|---|
+| Training | 89,634 | Fit the primary and challenger models |
+| Calibration | 14,938 | Calibrate challenger probabilities |
+| Policy selection | 14,940 | Choose challenger decision thresholds without using test data |
+| Test holdout | 29,879 | Final model evaluation only |
+
+The primary pipeline applies fixed feature ordering, converts age zero to missing, and uses median imputation with missing indicators before XGBoost. The challengers use the same ten applicant features. Logistic regression additionally uses `log1p` transformations and standardization; both challengers use sigmoid probability calibration. This is conventional model training rather than LLM fine-tuning.
+
+### Frozen configurations
+
+| Model | Main configuration | Threshold selection |
+|---|---|---|
+| XGBoost | 400 trees, depth 3, learning rate 0.04, minimum child weight 10, 0.85 row subsampling, 0.90 column subsampling, L2 regularization 5 | Maximum positive-class F1 on the original validation data |
+| Logistic regression | Median imputation, missing indicators, `log1p`, standardization, L2 regularization with C=1 | Maximum F1 on the separate policy subset |
+| Random forest | 180 trees, maximum depth 16, minimum leaf size 25, 80% feature sampling | Maximum F1 on the separate policy subset |
+
+### Untouched holdout results
+
+| Model | ROC AUC | Average precision | Brier ↓ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| XGBoost | **0.8696** | **0.4152** | **0.0483** | **0.3952** | 0.5549 | **0.4617** |
+| Logistic regression | 0.8389 | 0.3724 | 0.0516 | 0.3821 | 0.5040 | 0.4346 |
+| Random forest | 0.8659 | 0.4135 | 0.0495 | 0.3685 | **0.5774** | 0.4499 |
+
+Plain accuracy is intentionally not emphasized. With only about 6.70% positive cases, a majority-class prediction could appear accurate while missing the cases the model is meant to detect. ROC AUC measures ranking, average precision reflects performance on the rare positive class, F1 balances precision and recall, and Brier score measures probability error.
+
+The complete provenance, imputation medians, calibration notes, and evaluation caveats are preserved in [`prototype/provenance/ORIGINAL_AUDIT_REPORT.md`](prototype/provenance/ORIGINAL_AUDIT_REPORT.md).
+
 ## What VerdictLens checks
 
 | Check | Question | Possible review flag |

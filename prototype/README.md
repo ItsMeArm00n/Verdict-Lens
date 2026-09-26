@@ -155,6 +155,42 @@ Validation rules:
 
 The primary model alone controls the original decision. A risk below its threshold is `APPROVE`; a risk at or above it is `REJECT`. Challenger models supply comparison evidence and never replace the primary output.
 
+### Training data and splits
+
+The frozen artifacts were trained from a preserved cleaned dataset containing **149,391 labeled rows** and ten applicant features. A separate file records **609 excluded duplicate IDs**. The target is binary serious delinquency, and positive cases represent about **6.70%** of the untouched test set.
+
+| Data partition | Rows | Used for |
+|---|---:|---|
+| Training | 89,634 | Fitting all three model families |
+| Calibration | 14,938 | Sigmoid calibration for the two challengers |
+| Policy | 14,940 | Selecting challenger thresholds by F1 |
+| Test | 29,879 | Final untouched evaluation |
+
+Identical cleaned predictor profiles were kept together when the validation data was divided into calibration and policy subsets. The test set was not used to fit the models, calibrate probabilities, or select audit thresholds.
+
+### Preprocessing and model parameters
+
+- **Primary XGBoost:** fixed ten-feature order → age-zero handling → median imputation with missing indicators → XGBoost. The booster uses 400 trees, depth 3, learning rate 0.04, minimum child weight 10, subsample 0.85, column subsample 0.90, and L2 regularization 5.
+- **Logistic regression:** median imputation, missing indicators, `log1p` transformations, standardization, and L2 regularization with `C=1`.
+- **Random forest:** 180 trees, maximum depth 16, minimum leaf size 25, and 80% feature sampling.
+- **Calibration:** both challengers use sigmoid calibration on the calibration subset. The saved primary has no separate fitted probability calibrator.
+- **Class handling:** natural prevalence was retained; no oversampling and no class weighting were used.
+- **Thresholds:** each threshold maximizes positive-class F1 on its designated validation or policy data. The thresholds are demonstration policies, not lending-cost-optimized cutoffs.
+
+This project does not fine-tune a foundation model. The three predictive models are trained conventional supervised-learning models. Gemini is a downstream wording layer only.
+
+### Holdout performance
+
+| Model | ROC AUC | Average precision | Brier ↓ | Precision | Recall | F1 | Threshold |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| XGBoost | **0.8696** | **0.4152** | **0.0483** | **0.3952** | 0.5549 | **0.4617** | 0.178670 |
+| Logistic regression | 0.8389 | 0.3724 | 0.0516 | 0.3821 | 0.5040 | 0.4346 | 0.127009 |
+| Random forest | 0.8659 | 0.4135 | 0.0495 | 0.3685 | **0.5774** | 0.4499 | 0.101377 |
+
+Accuracy is omitted because the dataset is imbalanced. ROC AUC, average precision, precision, recall, F1, and Brier score give a more honest picture of ranking, rare-class detection, decision tradeoffs, and probability quality. These results evaluate prediction performance; they do not measure fairness or prove that an audit flag is correct.
+
+For the full provenance record, training medians, reliability observations, signal rates, and evaluation caveats, see [`provenance/ORIGINAL_AUDIT_REPORT.md`](provenance/ORIGINAL_AUDIT_REPORT.md).
+
 ## Audit result
 
 VerdictLens returns:
