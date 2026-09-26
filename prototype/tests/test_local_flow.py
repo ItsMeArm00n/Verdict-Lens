@@ -74,6 +74,31 @@ class LocalFlowTests(unittest.TestCase):
                     Auditor(directory)
                 loader.assert_not_called()
 
+    def test_audit_config_integrity_is_line_ending_independent(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            for name in ['primary_model.joblib', 'challengers.joblib', 'audit_config.json', 'manifest.json']:
+                shutil.copyfile(DEFAULT_MODELS / name, directory / name)
+            content = (directory / 'audit_config.json').read_text(encoding='utf-8')
+            (directory / 'audit_config.json').write_text(
+                content.replace('\r\n', '\n'), encoding='utf-8', newline='\n'
+            )
+            self.assertEqual(Auditor(directory).run(self.samples[0]), self.auditor.run(self.samples[0]))
+
+    def test_audit_config_content_tampering_still_fails(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            for name in ['primary_model.joblib', 'challengers.joblib', 'audit_config.json', 'manifest.json']:
+                shutil.copyfile(DEFAULT_MODELS / name, directory / name)
+            config_path = directory / 'audit_config.json'
+            config = json.loads(config_path.read_text(encoding='utf-8'))
+            config['primary_threshold'] = 0.5
+            config_path.write_text(json.dumps(config, indent=2), encoding='utf-8')
+            with patch('verdictlens.artifacts.joblib.load') as loader:
+                with self.assertRaisesRegex(ValueError, 'audit_config.json'):
+                    Auditor(directory)
+                loader.assert_not_called()
+
     def test_cli_single_batch_invalid_and_independent_working_directory(self):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)
